@@ -1,0 +1,14 @@
+**/gen-java
+**/.classpath
+**/.project
+**/target/
+**/.settings/
+**/coverage-report/
+**/metadata/
+**/logs/
+**/log/
+**/*.iml
+**/output/
+**/.idea/
+**/.DS_Store
+*.iml
