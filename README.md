@@ -11,6 +11,8 @@ A lightweight java unit test library for mocking thrift service
 ## Getting Started
 
 ### 1. import maven dependency
+The official groupId is not ready yet, please fork and release it temporarily. 
+We will release to maven central repo as soon as possible.
 
 ### 2. start server 
 ```java
@@ -86,6 +88,8 @@ service ByeService {
     Assert.assertEquals(msg.getMsg(), "hello");
 
 ```
+## Todo
+* thrift-mock don't support aysnc call yet, but we will support it in next release version. 
 
 ## Contributing    
 Welcome to contribute by creating issues or sending pull requests. See [Contributing Guide](./CONTRIBUTING.md) for guidelines.
