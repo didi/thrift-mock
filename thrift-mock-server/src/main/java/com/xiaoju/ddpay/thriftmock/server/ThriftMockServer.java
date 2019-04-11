@@ -2,10 +2,13 @@ package com.xiaoju.ddpay.thriftmock.server;
 
 
 
+import com.google.common.base.Preconditions;
+
 import org.apache.thrift.TBase;
 import org.apache.thrift.TBaseProcessor;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -26,6 +29,8 @@ public class ThriftMockServer implements MockServer {
 
   public ThriftMockServer(ServerConfig config){
     this.serverConfig =  config;
+    Preconditions.checkArgument(config.getMinWorkerThread() > 0);
+    Preconditions.checkArgument(config.getMaxWorkerThread() > 0);
   }
 
   @Override
@@ -39,10 +44,12 @@ public class ThriftMockServer implements MockServer {
       throw new IllegalArgumentException("port already in use");
     }
     TBaseProcessor tProcessor = new TMockProcessor(serverConfig.getProcessMap());
-    TServer.Args serverArgs = new TServer.Args(serverTransport);
+    TThreadPoolServer.Args serverArgs = new TThreadPoolServer.Args(serverTransport);
     serverArgs.processor(tProcessor);
     serverArgs.protocolFactory(serverConfig.gettServerProtocolFactory());
-    tServer = new TSimpleServer(serverArgs);
+    serverArgs.minWorkerThreads(serverConfig.getMinWorkerThread());
+    serverArgs.maxWorkerThreads(serverConfig.getMaxWorkerThread());
+    tServer = new TThreadPoolServer(serverArgs);
     tServer.serve();
   }
 
