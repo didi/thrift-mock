@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerConfig {
+  private static final int DEFAULT_THREAD_SIZE = 2;
   private int port;
+  private int minWorkerThread;
+  private int maxWorkerThread;
   private TProtocolFactory tServerProtocolFactory;
   private Map<String, ProcessFunction> processMap = Maps.newConcurrentMap();
 
@@ -24,6 +27,8 @@ public class ServerConfig {
     ServerConfig config = new ServerConfig();
     config.settServerProtocolFactory(new TBinaryProtocol.Factory())
         .setPort(port);
+    config.setMinWorkerThread(DEFAULT_THREAD_SIZE);
+    config.setMaxWorkerThread(DEFAULT_THREAD_SIZE);
     return config;
   }
 
@@ -51,5 +56,21 @@ public class ServerConfig {
 
   public void setProcessMap(Map<String, ProcessFunction> processMap) {
     this.processMap = processMap;
+  }
+
+  public int getMinWorkerThread() {
+    return minWorkerThread;
+  }
+
+  public void setMinWorkerThread(int minWorkerThread) {
+    this.minWorkerThread = minWorkerThread;
+  }
+
+  public int getMaxWorkerThread() {
+    return maxWorkerThread;
+  }
+
+  public void setMaxWorkerThread(int maxWorkerThread) {
+    this.maxWorkerThread = maxWorkerThread;
   }
 }
