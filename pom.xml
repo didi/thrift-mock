@@ -34,7 +34,7 @@
 
     <distributionManagement>
         <repository>
-            <id>gaoshoudemingziyibanbuhuiduan@gmail.com</id>
+            <id>ossrh</id>
             <url>http://repo1.maven.org/maven2/</url>
         </repository>
     </distributionManagement>
