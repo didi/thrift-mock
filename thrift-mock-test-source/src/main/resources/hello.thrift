@@ -1,5 +1,5 @@
 
-namespace java com.xiaoju.ddpay.thriftmock.server
+namespace java com.didiglobal.thriftmock.server
 
 
 struct Request{
