@@ -8,11 +8,38 @@
     <artifactId>thrift-mock</artifactId>
     <version>1.0.0</version>
 
+    <name>thrift-mock</name>
+    <description>A lightweight test lib for thrift.</description>
+    <url>https://www.github.com/didi/thrift-mock</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>luoyang</name>
+            <email>gaoshoudemingziyibanbuhuiduan@gmail.com</email>
+            <organization>Didi</organization>
+            <organizationUrl>http://www.didiglobal.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:didi/thrift-mock.git</connection>
+        <developerConnection>scm:git:ssh://github.com:didi/thrift-mock.git</developerConnection>
+        <url>https://github.com/didi/thrift-mock</url>
+    </scm>
+
     <modules>
         <module>thrift-mock-test-source</module>
         <module>thrift-mock-server</module>
         <module>thrift-mock-server4junit</module>
     </modules>
+
 
     <dependencies>
         <dependency>
@@ -32,10 +59,11 @@
         </dependency>
     </dependencies>
 
+
     <distributionManagement>
         <repository>
             <id>ossrh</id>
-            <url>http://repo1.maven.org/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -53,12 +81,37 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>ossrh</id>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
