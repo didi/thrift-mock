@@ -11,8 +11,30 @@ A lightweight java unit test library for mocking thrift service
 ## Getting Started
 
 ### 1. import maven dependency
-The official groupId is not ready yet, please fork and release it temporarily. 
-We will release to maven central repo as soon as possible.
+working with junit
+```xml
+    <dependency>
+        <groupId>com.didiglobal.thriftmock</groupId>
+        <artifactId>thrift-mock-server4junit</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+```
+working without junit
+```xml
+    <dependency>
+        <groupId>com.didiglobal.thriftmock</groupId>
+        <artifactId>thrift-mock-server</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+```
+thrift test source
+```xml
+    <dependency>
+        <groupId>com.didiglobal.thriftmock</groupId>
+        <artifactId>thrift-mock-server</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+```
 
 ### 2. start server 
 ```java
