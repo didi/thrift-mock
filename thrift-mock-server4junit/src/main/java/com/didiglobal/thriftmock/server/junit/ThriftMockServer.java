@@ -1,7 +1,7 @@
 package com.didiglobal.thriftmock.server.junit;
 
-import com.didiglobal.thriftmock.server.FixedResponseProcessFunction;
 import com.didiglobal.thriftmock.server.MockServer;
+import com.didiglobal.thriftmock.server.ProcessFunctionMock;
 import com.didiglobal.thriftmock.server.ServerConfig;
 
 import org.apache.thrift.TBase;
@@ -13,9 +13,8 @@ public class ThriftMockServer extends ExternalResource implements MockServer {
 
   private com.didiglobal.thriftmock.server.ThriftMockServer mockServer;
 
-
   public ThriftMockServer(int port) {
-    this(ServerConfig.createServerConfig(port));
+    this(new ServerConfig(port));
   }
 
   public ThriftMockServer(ServerConfig serverConfig) {
@@ -54,8 +53,7 @@ public class ThriftMockServer extends ExternalResource implements MockServer {
     mockServer.setExpectReturn(methodName, result, delay);
   }
 
-  @Override
-  public void setExpectReturn(String methodName, FixedResponseProcessFunction processFunction) {
+  public void setExpectReturn(String methodName, ProcessFunctionMock processFunction) {
     mockServer.setExpectReturn(methodName, processFunction);
   }
 

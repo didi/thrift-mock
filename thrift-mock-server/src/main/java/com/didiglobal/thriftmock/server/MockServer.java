@@ -8,9 +8,8 @@ public interface MockServer {
 
   void start();
   void stop();
-  void setExpectReturn(String methodName, FixedResponseProcessFunction processFunction);
   void setExpectReturn(String methodName, TBase result);
   void setExpectReturn(String methodName, TBase result, int delay);
-  void setExpectReturn(String methodName, TBase emptyArgs, Function<TBase, TBase> mockResultFunction);
+  void setExpectReturn(String methodName, TBase args, Function<TBase, TBase> mockResultFunction);
 
 }
