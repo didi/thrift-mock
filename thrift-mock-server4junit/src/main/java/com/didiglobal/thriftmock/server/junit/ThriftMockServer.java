@@ -53,10 +53,6 @@ public class ThriftMockServer extends ExternalResource implements MockServer {
     mockServer.setExpectReturn(methodName, result, delay);
   }
 
-  public void setExpectReturn(String methodName, ProcessFunctionMock processFunction) {
-    mockServer.setExpectReturn(methodName, processFunction);
-  }
-
   @Override
   public void setExpectReturn(String methodName, TBase emptyArgs,
                               Function<TBase, TBase> mockResultFunction) {
