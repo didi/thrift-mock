@@ -23,7 +23,7 @@ public class ThriftMockServer implements MockServer {
   private TServer tServer;
 
   public ThriftMockServer(int port) {
-    this.serverConfig = ServerConfig.createServerConfig(port);
+    this.serverConfig = new ServerConfig(port);
   }
 
   public ThriftMockServer(ServerConfig config){
@@ -45,7 +45,7 @@ public class ThriftMockServer implements MockServer {
     TBaseProcessor tProcessor = new TMockProcessor(serverConfig.getProcessMap());
     TThreadPoolServer.Args serverArgs = new TThreadPoolServer.Args(serverTransport);
     serverArgs.processor(tProcessor);
-    serverArgs.protocolFactory(serverConfig.gettServerProtocolFactory());
+    serverArgs.protocolFactory(serverConfig.getTProtocolFactory());
     serverArgs.minWorkerThreads(serverConfig.getMinWorkerThread());
     serverArgs.maxWorkerThreads(serverConfig.getMaxWorkerThread());
     tServer = new TThreadPoolServer(serverArgs);
@@ -62,22 +62,23 @@ public class ThriftMockServer implements MockServer {
 
   @Override
   public void setExpectReturn(String methodName, TBase result) {
-    setExpectReturn(methodName, new FixedResponseProcessFunction(methodName, result));
+    setExpectReturn(new ProcessFunctionMock(methodName, result));
   }
 
   @Override
   public void setExpectReturn(String methodName, TBase result, int delay) {
-    setExpectReturn(methodName, new FixedResponseProcessFunction(methodName, result, delay));
+    setExpectReturn(new ProcessFunctionMock(methodName, result, delay));
   }
 
-  @Override
-  public void setExpectReturn(String methodName, FixedResponseProcessFunction processFunction) {
-    serverConfig.getProcessMap().put(methodName, processFunction);
-  }
 
   @Override
-  public void setExpectReturn(String methodName, TBase emptyArgs,
+  public void setExpectReturn(String methodName, TBase args,
                               Function<TBase, TBase> mockResultFunction) {
-    serverConfig.getProcessMap().put(methodName, new DynamicResponseProcessFunction(methodName, emptyArgs, mockResultFunction));
+    setExpectReturn(new ProcessFunctionMock(methodName, args, mockResultFunction));
   }
+
+  public void setExpectReturn(ProcessFunctionMock processFunction) {
+    serverConfig.getProcessMap().put(processFunction.getMethodName(), processFunction);
+  }
+
 }

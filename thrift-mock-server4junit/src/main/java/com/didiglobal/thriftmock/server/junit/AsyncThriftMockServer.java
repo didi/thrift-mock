@@ -1,7 +1,7 @@
 package com.didiglobal.thriftmock.server.junit;
 
+import com.didiglobal.thriftmock.server.AsyncServerConfig;
 import com.didiglobal.thriftmock.server.MockServer;
-import com.didiglobal.thriftmock.server.ProcessFunctionMock;
 import com.didiglobal.thriftmock.server.ServerConfig;
 
 import org.apache.thrift.TBase;
@@ -9,16 +9,16 @@ import org.junit.rules.ExternalResource;
 
 import java.util.function.Function;
 
-public class ThriftMockServer extends ExternalResource implements MockServer {
+public class AsyncThriftMockServer extends ExternalResource implements MockServer {
 
   private com.didiglobal.thriftmock.server.MockServer mockServer;
 
-  public ThriftMockServer(int port) {
-    this(new ServerConfig(port));
+  public AsyncThriftMockServer(int port) {
+    this(new AsyncServerConfig(port));
   }
 
-  public ThriftMockServer(ServerConfig serverConfig) {
-    this.mockServer = new com.didiglobal.thriftmock.server.ThriftMockServer(serverConfig);
+  public AsyncThriftMockServer(AsyncServerConfig serverConfig) {
+    this.mockServer = new com.didiglobal.thriftmock.server.AsyncThriftMockServer(serverConfig);
   }
 
   @Override
@@ -35,7 +35,6 @@ public class ThriftMockServer extends ExternalResource implements MockServer {
   @Override
   public void start() {
     mockServer.start();
-
   }
 
   @Override

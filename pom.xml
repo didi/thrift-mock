@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
     <groupId>com.didiglobal.thriftmock</groupId>
     <artifactId>thrift-mock</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>thrift-mock</name>
     <description>A lightweight test lib for thrift.</description>
