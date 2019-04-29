@@ -17,7 +17,7 @@ working with junit
     <dependency>
         <groupId>com.didiglobal.thriftmock</groupId>
         <artifactId>thrift-mock-server4junit</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 ```
 working without junit
@@ -25,7 +25,7 @@ working without junit
     <dependency>
         <groupId>com.didiglobal.thriftmock</groupId>
         <artifactId>thrift-mock-server</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 ```
 thrift test source
@@ -33,7 +33,7 @@ thrift test source
     <dependency>
         <groupId>com.didiglobal.thriftmock</groupId>
         <artifactId>thrift-mock-server</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 ```
 
