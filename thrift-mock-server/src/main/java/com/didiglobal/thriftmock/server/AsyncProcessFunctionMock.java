@@ -34,14 +34,12 @@ public class AsyncProcessFunctionMock extends AsyncProcessFunction implements De
                                   TBase args,
                                   Function<TBase, TBase> mockResultFunction,
                                   int delay) {
-
     super(methodName);
     this.methodName = methodName;
     this.delay = delay;
     this.args = args;
     this.mockResultFunction = mockResultFunction;
   }
-
 
   @Override
   protected boolean isOneway() {

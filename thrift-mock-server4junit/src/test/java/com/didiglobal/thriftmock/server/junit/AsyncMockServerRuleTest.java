@@ -1,4 +1,5 @@
-package com.didiglobal.thriftmock.server;
+package com.didiglobal.thriftmock.server.junit;
+
 
 import com.google.common.base.Stopwatch;
 
@@ -11,41 +12,27 @@ import org.apache.thrift.async.TAsyncClientManager;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.transport.TNonblockingSocket;
 import org.apache.thrift.transport.TNonblockingTransport;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class AsyncServerTest {
+public class AsyncMockServerRuleTest {
 
-  AsyncServerConfig config = new AsyncServerConfig(9000, TBinaryProtocol::new);
-  MockServer mockServer;
-
-  @Before
-  public void before() {
-    mockServer = new AsyncThriftMockServer(config);
-    new Thread(mockServer::start).start();
-  }
-
-  @After
-  public void after() {
-    mockServer.stop();
-  }
+  @Rule
+  public AsyncThriftMockServer server = new AsyncThriftMockServer(9999);
 
   @Test
-  public void testAsyncServer() throws Exception {
-    Response response = new Response();
-    response.setCode(200);
-    String responseMsg = "asyncResponse";
-    response.setResponseMsg(responseMsg);
-    mockServer.setExpectReturn("sayHello", response);
+  public void testAsyncServerRule() throws Exception {
+    String responseMsg = "asyncHello";
+    Response expectHelloResponse = new Response(200, responseMsg);
+    server.setExpectReturn("sayHello", expectHelloResponse);
 
     TNonblockingTransport transport = new TNonblockingSocket("127.0.0.1",
-                                                             config.getPort(),
-                                                             4000);
-    HelloService.AsyncIface client = new HelloService.AsyncClient(config.getTProtocolFactory(),
+                                                             9999,
+                                                             3000);
+    HelloService.AsyncIface client = new HelloService.AsyncClient(new TBinaryProtocol.Factory(),
                                                                   new TAsyncClientManager(),
                                                                   transport);
     Request request = new Request();
@@ -55,20 +42,20 @@ public class AsyncServerTest {
     client.sayHello(request, new AsyncMethodCallback() {
       @Override
       public void onComplete(Object response) {
-        //TODO according to the test result, async call seems cost 30~70m. That's strange!
-        System.out.println("async call cost:" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        System.out.println("cost:" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
         result.setCode(((Response)response).getCode());
         result.setResponseMsg(((Response)response).getResponseMsg());
       }
 
       @Override
       public void onError(Exception exception) {
-        System.out.println(exception.getLocalizedMessage());
+        System.out.println(exception.getMessage());
       }
     });
+    Thread.sleep(50);
     System.out.println("final result:" + result);
-    Thread.sleep(100);
     Assert.assertTrue(result.getCode() == 200);
     Assert.assertTrue(responseMsg.equals(result.getResponseMsg()));
   }
+
 }

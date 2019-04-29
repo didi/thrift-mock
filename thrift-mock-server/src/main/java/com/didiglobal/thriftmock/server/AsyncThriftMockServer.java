@@ -1,7 +1,5 @@
 package com.didiglobal.thriftmock.server;
 
-
-
 import org.apache.thrift.AsyncProcessFunction;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TProcessor;
@@ -25,13 +23,12 @@ public class AsyncThriftMockServer implements MockServer {
     this.serverConfig = new AsyncServerConfig(port);
   }
 
-  public AsyncThriftMockServer(Config config){
+  public AsyncThriftMockServer(AsyncServerConfig config){
     this.serverConfig =  config;
   }
 
   @Override
   public void start() {
-    // Only support blocking now
     TNonblockingServerSocket serverTransport;
     try {
       serverTransport = new TNonblockingServerSocket(serverConfig.getPort());

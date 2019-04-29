@@ -7,6 +7,7 @@ A lightweight java unit test library for mocking thrift service
 * Configurable response delays
 * Support binding different interfaces from different thrift service to one server 
 * Embedded with junit4
+* Support both blocking and non-blocking call
 
 ## Getting Started
 
@@ -38,14 +39,25 @@ thrift test source
 
 ### 2. start server 
 ```java
-   //working without junit, starting a non-blocking server
+   //working without junit, blocking server
    ThriftMockServer server = new ThriftMockServer(9999);
    Thread t = new Thread(server::start);
    t.start();
+   
+   //working without junit, starting a non-blocking server
+   AsyncThriftMockServer server = new AsyncThriftMockServer(9999);
+   Thread t = new Thread(server::start);
+   t.start();
+ 
  
    //working with junit 
+   //blocking server
    @Rule
    public ThriftMockServer server = new ThriftMockServer(9999);
+   
+   //non-blocking server
+   @Rule
+   public AsyncThriftMockServer server = new AsyncThriftMockServer(9999);
 
 ```  
 ### 3. bind interface with expect response   
