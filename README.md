@@ -123,8 +123,7 @@ service ByeService {
 
 ```
 ## Todo
-* thrift-mock don't support aysnc call yet, but we will support it in next release version. 
-
+* make it work like wiremock to test thrift service.
 ## Contributing    
 Welcome to contribute by creating issues or sending pull requests. See [Contributing Guide](./CONTRIBUTING.md) for guidelines.
 
