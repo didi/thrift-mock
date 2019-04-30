@@ -5,5 +5,10 @@ install:
 
 script: "mvn cobertura:cobertura"
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
