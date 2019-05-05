@@ -1,4 +1,7 @@
 # thrift-mock    
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/41508e6ecd9043e4a797327eb7cbe1cc)](https://app.codacy.com/app/YORYOR/thrift-mock?utm_source=github.com&utm_medium=referral&utm_content=didi/thrift-mock&utm_campaign=Badge_Grade_Dashboard)
+
 A lightweight java unit test library for mocking thrift service
 
 ## Features
