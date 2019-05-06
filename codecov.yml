@@ -1,0 +1,3 @@
+ignore:
+  - "thrift-mock-server4junit"  # ignore folders and all its contents
+ 
