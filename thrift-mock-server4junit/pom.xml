@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.didiglobal.thriftmock</groupId>
             <artifactId>thrift-mock-test-source</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
 
