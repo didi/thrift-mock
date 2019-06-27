@@ -51,6 +51,6 @@ public class ProcessFunctionMock extends ProcessFunction implements Delay{
 
   @Override
   public TBase getEmptyArgsInstance() {
-    return args;
+    return new MockResult(methodName, mockResultFunction.apply(args));
   }
 }
