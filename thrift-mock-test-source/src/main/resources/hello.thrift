@@ -1,5 +1,5 @@
 
-namespace java com.didiglobal.thriftmock.server
+namespace java com.didiglobal.thriftmock.test.source
 
 
 struct Request{
@@ -14,6 +14,8 @@ struct Response{
 
 service HelloService {
     Response sayHello(1:required Request request);
+    bool healthCheck();
+    oneway void notifySubscriber(1: Request request);
 }
 service ByeService {
     Response sayBye(1:required Request request);
