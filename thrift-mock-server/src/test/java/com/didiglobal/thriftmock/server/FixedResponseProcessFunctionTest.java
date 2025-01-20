@@ -61,14 +61,13 @@ public class FixedResponseProcessFunctionTest {
 
         // Given
         server.setExpectReturn(new ProcessFunctionMock("healthCheck", new HelloService.healthCheck_result()
-                .setSuccess(true)));
+                .setSuccess(true)).setPrimitive());
         // When
         boolean actualResponse = helloService.healthCheck();
         // Then
         Assert.assertTrue(actualResponse);
 
         server.stop();
-        t.join();
     }
 
     @Test
@@ -82,8 +81,8 @@ public class FixedResponseProcessFunctionTest {
 
         // Given
         server.setExpectReturn(new ProcessFunctionMock("healthCheck", new HelloService.healthCheck_result()
-                .setSuccess(true)));
-        server.setExpectReturn(new ProcessFunctionMock("notifySubscriber", expectHelloResponse));
+                .setSuccess(true)).setPrimitive());
+        server.setExpectReturn(new ProcessFunctionMock("notifySubscriber", expectHelloResponse).setOneway(true));
         helloService.notifySubscriber(new Request().setMsg("hello"));
         // When
         boolean result = helloService.healthCheck();
@@ -91,7 +90,6 @@ public class FixedResponseProcessFunctionTest {
         Assert.assertTrue(result);
 
         server.stop();
-        t.join();
     }
 
 }
