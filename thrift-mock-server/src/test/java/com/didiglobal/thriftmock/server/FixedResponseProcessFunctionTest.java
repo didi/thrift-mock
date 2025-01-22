@@ -49,4 +49,47 @@ public class FixedResponseProcessFunctionTest {
     helloService.sayHello(request);
     server.stop();
   }
+
+    @Test
+    public void testPrimitiveResponse() throws Exception {
+        ThriftMockServer server = new ThriftMockServer(9999);
+        Thread t = new Thread(server::start);
+        t.start();
+
+        TProtocol protocol = TProtocolUtil.initTProtocol("127.0.0.1", 9999);
+        HelloService.Iface helloService = new HelloService.Client(protocol);
+
+        // Given
+        server.setExpectReturn(new ProcessFunctionMock("healthCheck", new HelloService.healthCheck_result()
+                .setSuccess(true)).setPrimitive());
+        // When
+        boolean actualResponse = helloService.healthCheck();
+        // Then
+        Assert.assertTrue(actualResponse);
+
+        server.stop();
+    }
+
+    @Test
+    public void testOneway() throws Exception {
+        ThriftMockServer server = new ThriftMockServer(9999);
+        Thread t = new Thread(server::start);
+        t.start();
+
+        TProtocol protocol = TProtocolUtil.initTProtocol("127.0.0.1", 9999);
+        HelloService.Iface helloService = new HelloService.Client(protocol);
+
+        // Given
+        server.setExpectReturn(new ProcessFunctionMock("healthCheck", new HelloService.healthCheck_result()
+                .setSuccess(true)).setPrimitive());
+        server.setExpectReturn(new ProcessFunctionMock("notifySubscriber", expectHelloResponse).setOneway(true));
+        helloService.notifySubscriber(new Request().setMsg("hello"));
+        // When
+        boolean result = helloService.healthCheck();
+        // Then
+        Assert.assertTrue(result);
+
+        server.stop();
+    }
+
 }

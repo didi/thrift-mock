@@ -12,6 +12,8 @@ public class ProcessFunctionMock extends ProcessFunction implements Delay{
   private int delay;
   private TBase args;
   private Function<TBase, TBase> mockResultFunction;
+  private boolean isOneway = false;
+  private boolean isPrimitive = false;
 
   public ProcessFunctionMock(String methodName, TBase result) {
     this(methodName, result, 0);
@@ -38,19 +40,31 @@ public class ProcessFunctionMock extends ProcessFunction implements Delay{
     this.delay = delay;
   }
 
+  public ProcessFunctionMock setOneway(boolean oneway) {
+    this.isOneway = oneway;
+
+    return this;
+  }
+
+  public ProcessFunctionMock setPrimitive() {
+    this.isPrimitive = true;
+
+    return this;
+  }
+
   @Override
   protected boolean isOneway() {
-    return false;
+    return isOneway;
   }
 
   @Override
   public TBase getResult(Object iface, TBase args) throws TException {
     delay(delay);
-    return new MockResult(methodName, mockResultFunction.apply(args));
+    return isPrimitive ? mockResultFunction.apply(args) : new MockResult(methodName, mockResultFunction.apply(args));
   }
 
   @Override
   public TBase getEmptyArgsInstance() {
-    return new MockResult(methodName, mockResultFunction.apply(args));
+    return isPrimitive ? mockResultFunction.apply(args) :   new MockResult(methodName, mockResultFunction.apply(args));
   }
 }
