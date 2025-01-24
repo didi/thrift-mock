@@ -5,7 +5,6 @@ import org.apache.thrift.TBase;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.server.TNonblockingServer;
 import org.apache.thrift.server.TServer;
-import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
@@ -40,7 +39,6 @@ public class AsyncThriftMockServer implements MockServer {
     TNonblockingServer.Args serverArgs = new TNonblockingServer.Args(serverTransport);
     serverArgs.processor(tProcessor);
     serverArgs.protocolFactory(serverConfig.getTProtocolFactory());
-    serverArgs.transportFactory(new TFramedTransport.Factory());
     tServer = new TNonblockingServer(serverArgs);
     tServer.serve();
   }

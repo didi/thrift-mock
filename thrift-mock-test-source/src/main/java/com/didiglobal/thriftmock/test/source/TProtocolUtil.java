@@ -1,6 +1,7 @@
 package com.didiglobal.thriftmock.test.source;
 
 
+import org.apache.thrift.TConfiguration;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
@@ -22,7 +23,7 @@ public class TProtocolUtil {
     if (timeout == null || timeout <= 0){
       transport = new TSocket(host, port);
     } else {
-      transport = new TSocket(host, port, timeout);
+      transport = new TSocket(new TConfiguration(), host, port, timeout);
     }
     transport.open();
     return new TBinaryProtocol(transport);
