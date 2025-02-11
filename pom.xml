@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
     <groupId>com.didiglobal.thriftmock</groupId>
     <artifactId>thrift-mock</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
 
     <name>thrift-mock</name>
     <description>A lightweight test lib for thrift.</description>
@@ -69,15 +69,7 @@
         </dependency>
     </dependencies>
 
-
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <build>
+       <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -121,7 +113,7 @@
                 <version>1.5</version>
                 <executions>
                    <execution>
-                       <id>ossrh</id>
+                       <id>oss_central</id>
                        <phase>verify</phase>
                        <goals>
                            <goal>sign</goal>
@@ -147,6 +139,15 @@
                    <check />
                </configuration>
            </plugin>
+           <plugin>
+          	<groupId>org.sonatype.central</groupId>
+          	<artifactId>central-publishing-maven-plugin</artifactId>
+          	<version>0.7.0</version>
+          	<extensions>true</extensions>
+          	<configuration>
+            		<publishingServerId>oss_central</publishingServerId>
+          	</configuration>
+        </plugin>
         </plugins>
     </build>
 </project>
