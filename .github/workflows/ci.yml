@@ -27,3 +27,13 @@ jobs:
 
       - name: Build and test
         run: mvn test -Dgpg.skip=true -Dmaven.javadoc.skip=true -B
+
+      - name: Upload coverage reports
+        if: matrix.java-version == '21'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-reports
+          path: |
+            thrift-mock-server/target/site/jacoco/
+            thrift-mock-server4junit/target/site/jacoco/
+          retention-days: 7

@@ -21,6 +21,7 @@ public class DynamicResponseProcessFunctionTest {
     ThriftMockServer server = new ThriftMockServer(9999);
     Thread t = new Thread(server::start);
     t.start();
+    Thread.sleep(100);
     TBase emptyArgs = new HelloService.sayHello_args();
     Function<TBase, TBase> returnLogic = (tBase) -> {
       HelloService.sayHello_args sayHello_args = (HelloService.sayHello_args)tBase;
