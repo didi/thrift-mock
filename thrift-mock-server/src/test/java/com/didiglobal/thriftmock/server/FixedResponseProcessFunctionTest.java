@@ -41,6 +41,7 @@ public class FixedResponseProcessFunctionTest {
     ThriftMockServer server = new ThriftMockServer(9998);
     Thread t = new Thread(server::start);
     t.start();
+    Thread.sleep(100);
     server.setExpectReturn("sayHello", expectHelloResponse, 1000);
 
     Request request = new Request();

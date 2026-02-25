@@ -168,7 +168,8 @@ public class MockResultTest {
     @Test
     public void testHashCode_doesNotThrow() {
         MockResult result = new MockResult("sayHello", response1);
-        result.hashCode(); // must not throw
+        int hashCode = result.hashCode();
+        Assert.assertEquals(hashCode, result.hashCode()); // stable: same object returns same value
     }
 
     @Test

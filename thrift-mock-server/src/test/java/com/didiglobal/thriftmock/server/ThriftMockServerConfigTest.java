@@ -1,5 +1,8 @@
 package com.didiglobal.thriftmock.server;
 
+import com.didiglobal.thriftmock.test.source.HelloService;
+import com.didiglobal.thriftmock.test.source.Response;
+
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.junit.Test;
 
@@ -39,14 +42,12 @@ public class ThriftMockServerConfigTest {
     @Test
     public void testAsyncSetExpectReturnWithDelay() {
         AsyncThriftMockServer server = new AsyncThriftMockServer(new AsyncServerConfig(8815));
-        // Exercises the (String, TBase, int) overload and AsyncProcessFunctionMock(String, TBase, int) constructor
-        server.setExpectReturn("sayHello", new com.didiglobal.thriftmock.test.source.Response(200, "test"), 50);
+        server.setExpectReturn("sayHello", new Response(200, "test"), 50);
         server.stop();
     }
 
     @Test
     public void testAsyncConstructorWithIntPort() {
-        // Exercises the AsyncThriftMockServer(int port) constructor
         AsyncThriftMockServer server = new AsyncThriftMockServer(8816);
         server.stop();
     }
@@ -54,11 +55,10 @@ public class ThriftMockServerConfigTest {
     @Test
     public void testAsyncSetExpectReturnWithDynamicFunction() {
         AsyncThriftMockServer server = new AsyncThriftMockServer(new AsyncServerConfig(8817));
-        // Exercises the (String, TBase, Function) overload
         server.setExpectReturn(
             "sayHello",
-            new com.didiglobal.thriftmock.test.source.HelloService.sayHello_args(),
-            args -> new com.didiglobal.thriftmock.test.source.Response(200, "dynamic"));
+            new HelloService.sayHello_args(),
+            args -> new Response(200, "dynamic"));
         server.stop();
     }
 }
