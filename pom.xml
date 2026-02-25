@@ -153,6 +153,7 @@
           	<extensions>true</extensions>
           	<configuration>
             		<publishingServerId>oss_central</publishingServerId>
+				<autoPublish>true</autoPublish>
           	</configuration>
         </plugin>
         </plugins>
