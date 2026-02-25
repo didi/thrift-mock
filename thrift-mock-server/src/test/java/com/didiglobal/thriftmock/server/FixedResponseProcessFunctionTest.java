@@ -22,6 +22,7 @@ public class FixedResponseProcessFunctionTest {
     ThriftMockServer server = new ThriftMockServer(9999);
     Thread t = new Thread(server::start);
     t.start();
+    Thread.sleep(100);
 
     server.setExpectReturn("sayHello", expectHelloResponse);
 
@@ -40,6 +41,7 @@ public class FixedResponseProcessFunctionTest {
     ThriftMockServer server = new ThriftMockServer(9998);
     Thread t = new Thread(server::start);
     t.start();
+    Thread.sleep(100);
     server.setExpectReturn("sayHello", expectHelloResponse, 1000);
 
     Request request = new Request();
@@ -55,6 +57,7 @@ public class FixedResponseProcessFunctionTest {
         ThriftMockServer server = new ThriftMockServer(9999);
         Thread t = new Thread(server::start);
         t.start();
+        Thread.sleep(100);
 
         TProtocol protocol = TProtocolUtil.initTProtocol("127.0.0.1", 9999);
         HelloService.Iface helloService = new HelloService.Client(protocol);
@@ -75,6 +78,7 @@ public class FixedResponseProcessFunctionTest {
         ThriftMockServer server = new ThriftMockServer(9999);
         Thread t = new Thread(server::start);
         t.start();
+        Thread.sleep(100);
 
         TProtocol protocol = TProtocolUtil.initTProtocol("127.0.0.1", 9999);
         HelloService.Iface helloService = new HelloService.Client(protocol);

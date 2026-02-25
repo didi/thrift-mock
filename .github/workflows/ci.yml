@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        java-version: [ '17', '21' ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and test
+        run: mvn test -Dgpg.skip=true -Dmaven.javadoc.skip=true -B
+
+      - name: Upload coverage reports
+        if: matrix.java-version == '21'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-coverage-reports
+          path: |
+            thrift-mock-server/target/site/jacoco/
+            thrift-mock-server4junit/target/site/jacoco/
+          retention-days: 7

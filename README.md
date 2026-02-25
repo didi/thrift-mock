@@ -4,6 +4,8 @@
 
 A lightweight java unit test library for mocking thrift service
 
+**Requires Java 17 or higher. Tested and supported on Java 17 and Java 21.**
+
 ## Features
 * Init thrift mock server without any pre-define thrift idl, only a port is needed
 * Dynamic binding thrift interface to its response
